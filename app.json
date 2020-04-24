@@ -1,0 +1,17 @@
+{
+  "name": "solr-native-client",
+  "displayName": "solr-native-client",
+  "expo": {
+    "name": "solr-native-client",
+    "slug": "solr-native-client",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

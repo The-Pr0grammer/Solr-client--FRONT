@@ -1,48 +1,67 @@
-import * as React from 'react';
-import { View,ScrollView,StyleSheet,Image, ImageBackground} from 'react-native';
+import * as React from "react";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Image,
+  ImageBackground,
+} from "react-native";
 import {
   Input,
   ThemeProvider,
   Button,
   Icon,
   Text,
-  Card
+  Card,
 } from "react-native-elements";
 
-function Flare({ navigation }) {
-    return (
+function Flare(props) {
+  console.log(props.flare.image_url);
+  return (
+    <View>
+      <Card title={props.flare.title}>
+        <Image
+          style={styles.cardImg}
+          source={{ uri: props.flare.image_url }}
+        ></Image>
+        <Text style={{ marginBottom: 10 }}>{props.flare.content} </Text>
         <View>
-      <Card
-  title='Test flare 🔥'
-  image={require("../images/imageedit_2_6812498525.png")}>
-  <Text style={{marginBottom: 10}}>
-This should be made into a component. Then these cards should be in a scrollable view. Styling needed for smaller, wider cards
-  </Text>
-  <Button
-    icon={<Icon name='code' color='#ffffff' />}
-    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-    title='VIEW NOW' />
-</Card>
-</View>
-    )}
+        <Button
+          buttonStyle={{
+            width: 50,
+            left: 300,
+            borderRadius: 25,
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 10,
+          }}
+          title="😎"
+        />
+        </View>
+      </Card>
+    </View>
+  );
+}
 
-export default Flare
+export default Flare;
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "black",
-      alignItems: "center",
-      justifyContent: "center",
-      bottom: 2,
-    },
-    background: {
-      flex: 1,
-      resizeMode: "cover",
-      justifyContent: "center",
-      width: "100%",
-      top: 4,
-    }
-  });
-
-  
+  container: {
+    flex: 1,
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+    bottom: 2,
+  },
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    width: "100%",
+    top: 4,
+  },
+  cardImg: {
+    height: 200,
+    width: "100%",
+  },
+});

@@ -1,42 +1,45 @@
-import * as React from 'react';
-import { View,ScrollView,StyleSheet,Image, ImageBackground} from 'react-native';
+import * as React from "react";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Image,
+  ImageBackground,
+} from "react-native";
 import {
   Input,
   ThemeProvider,
   Button,
   Icon,
   Text,
-  Card
+  Card,
 } from "react-native-elements";
+import Flare from "./Flare.js";
 
 const renderFlares = (props) => {
-    console.log(props)
+  return props.flares.map((flare) => <Flare key={flare.id} flare={flare} />);
+};
+
+function FlareContainer(props) {
+  console.log("our props", props.flares);
+  return <ScrollView>{renderFlares(props)}</ScrollView>;
 }
 
-function FlareContainer({ navigation }) {
-    return (
-<ScrollView >
-      {renderFlares()}
-</ScrollView>
-    )}
-
-export default FlareContainer 
+export default FlareContainer;
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "black",
-      alignItems: "center",
-      justifyContent: "center",
-      bottom: 2,
-    },
-    background: {
-      flex: 1,
-      resizeMode: "cover",
-      justifyContent: "center",
-      width: "100%",
-      top: 4,
-    }
-  });
-
-  
+  container: {
+    flex: 1,
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+    bottom: 2,
+  },
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    width: "100%",
+    top: 4,
+  },
+});

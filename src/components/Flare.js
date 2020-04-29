@@ -98,11 +98,8 @@ function Flare(props) {
             ></Image>
             <SafeAreaView style={styles.respDiv}>
               <FlatList
-                data={[
-                  { title: "first", id: 1 },
-                  { title: "second", id: 2 },
-                ]}
-                renderItem={({ item }) => <Response title={item.title} />}
+                data={props.flare.responses}
+                renderItem={({ item }) => <Response title={item.content} />}
                 keyExtractor={(item) => item.id}
               />
             </SafeAreaView>

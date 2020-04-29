@@ -53,13 +53,4 @@ const styles = StyleSheet.create({
     width: "100%",
     top: 4,
   },
-  ExploreButton: {
-    position: "absolute",
-    justifyContent: "center",
-    flex: 1,
-    top: 115,
-    right: 1,
-    height: 100,
-    width: 120,
-  },
 });

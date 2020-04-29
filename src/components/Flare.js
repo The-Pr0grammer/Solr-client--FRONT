@@ -6,6 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  TouchableHighlight,
 } from "react-native";
 import {
   Input,
@@ -16,6 +17,7 @@ import {
   Card,
 } from "react-native-elements";
 import { useState, useEffect } from "react";
+import Modal from "react-native-modal";
 
 function Flare(props) {
   const fpostGlasses = () => {
@@ -29,19 +31,67 @@ function Flare(props) {
     }).catch(function (res) {
       console.log(res);
     });
-    console.log("boutta post");
   };
 
   let [glasses, glassesIncr] = useState(props.flare["😎"]);
+  let [views, viewsIncr] = useState(props.flare.views);
+  let [modView, modViewToggle] = useState(false);
 
   useEffect(() => {
     fpostGlasses();
   }, [glasses]);
 
-  console.log(glasses);
+  // useEffect(() => {
+  //   fpostGlasses();
+  // }, [views]);
+
+  fireModal = (props) => {
+    return <ModalFlare flare={props.flare} />;
+  };
+
+  // console.log(glasses);
   return (
-    <View>
+    <View
+      onPress={(props) => fireModal(props)}
+      style={{ backgroundColor: "black" }}
+    >
+      <View style={{ flex: 1 }}>
+        <Modal isVisible={modView}>
+          <View style={{ flex: 1 }}>
+            <Text>Hello!</Text>
+            <TouchableHighlight
+              onPress={() => {
+                modViewToggle(!modView);
+              }}
+            >
+              <Text h3 style={styles.backButton}>
+                🔙
+              </Text>
+            </TouchableHighlight>
+          </View>
+        </Modal>
+      </View>
       <Card title={props.flare.title}>
+        <TouchableOpacity
+          onPress={() => {
+            modViewToggle(!modView);
+            viewsIncr(views + 1);
+          }}
+          style={{
+            flexDirection: "row",
+            backgroundColor: "#1357BE",
+            width: 40,
+            bottom: 2,
+            borderRadius: 25,
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 10,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text>💬</Text>
+        </TouchableOpacity>
         <Image
           style={styles.cardImg}
           source={{ uri: props.flare.image_url }}
@@ -51,10 +101,16 @@ function Flare(props) {
         </Text>
         <View style={styles.glassesDiv}>
           <Text h4 style={styles.glassesCount}>
+            {views}
+          </Text>
+          <Text h4 style={styles.glassesCount}>
             {glasses}
           </Text>
           <TouchableOpacity
-            onPress={() => glassesIncr(glasses + 1)}
+            onPress={() => {
+              glassesIncr(glasses + 1);
+              viewsIncr(views + 1);
+            }}
             style={{
               flexDirection: "row",
               backgroundColor: "#1357BE",
@@ -109,5 +165,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     textAlign: "right",
     width: 180,
+  },
+  backButton: {
+    backgroundColor: "gold",
+    width: 100,
+    height: 200,
   },
 });

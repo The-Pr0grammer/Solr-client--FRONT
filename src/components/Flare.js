@@ -107,6 +107,15 @@ function Flare(props) {
         </Modal>
       </View>
       <Card title={props.flare.title}>
+        <View style={styles.userDiv}>
+          <Image
+            style={styles.userPic}
+            source={{ uri: props.flare.user.image_url }}
+          ></Image>
+          <Text style={styles.username} h4>
+            {props.flare.user.name}
+          </Text>
+        </View>
         <TouchableOpacity
           onPress={() => {
             modViewToggle(!modView);
@@ -232,5 +241,23 @@ const styles = StyleSheet.create({
     top: 50,
     height: "30%",
     width: "100%",
+  },
+  userDiv: {
+    flexDirection: "row",
+    width: "40%",
+    justifyContent: "flex-start",
+  },
+  username: {
+    flexDirection: "row",
+    textAlign: "left",
+    width: 100,
+    height: 30,
+  },
+  userPic: {
+    flexDirection: "row",
+    backgroundColor:"gold",
+    width: 40,
+    height: 30,
+    borderRadius: 18,
   },
 });

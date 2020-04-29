@@ -17,6 +17,7 @@ import {
 import Flare from "./Flare.js";
 
 const renderFlares = (props) => {
+  console.log(props.flares);
   return props.flares.map((flare) => <Flare key={flare.id} flare={flare} />);
 };
 

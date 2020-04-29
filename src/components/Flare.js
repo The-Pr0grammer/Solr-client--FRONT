@@ -7,6 +7,8 @@ import {
   ImageBackground,
   TouchableOpacity,
   TouchableHighlight,
+  FlatList,
+  SafeAreaView,
 } from "react-native";
 import {
   Input,
@@ -18,8 +20,10 @@ import {
 } from "react-native-elements";
 import { useState, useEffect } from "react";
 import Modal from "react-native-modal";
+import Constants from "expo-constants";
 
 function Flare(props) {
+  console.log(props.flare);
   const fpostGlasses = () => {
     fetch(`http://0.0.0.0:3000/flares/${props.flare.id}`, {
       headers: {
@@ -49,7 +53,16 @@ function Flare(props) {
     return <ModalFlare flare={props.flare} />;
   };
 
-  // console.log(glasses);
+  function Response({ title }) {
+    return (
+      <View style={styles.item}>
+        <Text h4 style={styles.title}>
+          {title}
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View
       onPress={(props) => fireModal(props)}
@@ -58,16 +71,41 @@ function Flare(props) {
       <View style={{ flex: 1 }}>
         <Modal isVisible={modView}>
           <View style={{ flex: 1 }}>
-            <Text>Hello!</Text>
             <TouchableHighlight
               onPress={() => {
                 modViewToggle(!modView);
               }}
+              style={styles.backButton}
             >
-              <Text h3 style={styles.backButton}>
+              <Text h3 style={{ left: 5 }}>
                 🔙
               </Text>
             </TouchableHighlight>
+            <Text
+              h3
+              style={{
+                color: "gold",
+                justifyContent: "center",
+                textAlign: "center",
+                top: 50,
+              }}
+            >
+              {props.flare.title}
+            </Text>
+            <Image
+              style={styles.modalImage}
+              source={{ uri: props.flare.image_url }}
+            ></Image>
+            <SafeAreaView style={styles.respDiv}>
+              <FlatList
+                data={[
+                  { title: "first", id: 1 },
+                  { title: "second", id: 2 },
+                ]}
+                renderItem={({ item }) => <Response title={item.title} />}
+                keyExtractor={(item) => item.id}
+              />
+            </SafeAreaView>
           </View>
         </Modal>
       </View>
@@ -88,6 +126,7 @@ function Flare(props) {
             marginBottom: 10,
             alignItems: "center",
             justifyContent: "center",
+            left: 156,
           }}
         >
           <Text>💬</Text>
@@ -100,8 +139,8 @@ function Flare(props) {
           {props.flare.content}{" "}
         </Text>
         <View style={styles.glassesDiv}>
-          <Text h4 style={styles.glassesCount}>
-            {views}
+          <Text h4 style={styles.viewsCount}>
+            👀{views}
           </Text>
           <Text h4 style={styles.glassesCount}>
             {glasses}
@@ -109,7 +148,6 @@ function Flare(props) {
           <TouchableOpacity
             onPress={() => {
               glassesIncr(glasses + 1);
-              viewsIncr(views + 1);
             }}
             style={{
               flexDirection: "row",
@@ -166,9 +204,36 @@ const styles = StyleSheet.create({
     textAlign: "right",
     width: 180,
   },
+  viewsCount: {
+    flexDirection: "row",
+    textAlign: "left",
+    left: 40,
+    width: 180,
+  },
   backButton: {
     backgroundColor: "gold",
-    width: 100,
-    height: 200,
+    top: 40,
+    width: 50,
+    height: 45,
+    borderRadius: 32,
+    alignContent: "center",
+  },
+  respDiv: {
+    flex: 1,
+    marginTop: Constants.statusBarHeight,
+    top: 30,
+    height: "40%",
+  },
+  item: {
+    backgroundColor: "aqua",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 25,
+  },
+  modalImage: {
+    top: 50,
+    height: "30%",
+    width: "100%",
   },
 });

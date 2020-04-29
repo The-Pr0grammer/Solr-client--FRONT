@@ -21,7 +21,6 @@ const renderFlares = (props) => {
 };
 
 function FlareContainer(props) {
-  console.log("our props", props.flares);
   return <ScrollView>{renderFlares(props)}</ScrollView>;
 }
 

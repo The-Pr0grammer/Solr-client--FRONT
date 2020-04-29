@@ -1,45 +1,42 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { View,ScrollView,StyleSheet,Image, ImageBackground} from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Image,
+  ImageBackground,
+} from "react-native";
 import {
   Input,
   ThemeProvider,
   Button,
   Icon,
   Text,
-  Card
+  Card,
 } from "react-native-elements";
 import FlareContainer from "./FlareContainer.js";
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from "react";
 
-
-function Explore({ navigation },props) {
-  
-  const getFlares = () => { 
+function Explore({ navigation }, props) {
+  const getFlares = () => {
     fetch("http://0.0.0.0:3000/flares")
-    .then(resp => resp.json())
-    .then(fflares => updateFlares(fflares))
+      .then((resp) => resp.json())
+      .then((fflares) => updateFlares(fflares));
   };
   let [flares, updateFlares] = useState([]);
-  
-  useEffect(()=> {
-    getFlares()
-  },[])
-  
-  // getFlares()
-  console.log("explore props:",flares)
 
-  
+  useEffect(() => {
+    getFlares();
+  }, []);
+
   return (
-      <View>
-    
-      <Button style={styles.ExploreButton} title="Back to Login" onPress={() => navigation.navigate('Login')} />
-     
-      <FlareContainer flares={flares}/>
-  </View>
+    <View>
+      <FlareContainer flares={flares} />
+    </View>
   );
 }
-export default Explore
+export default Explore;
 
 const styles = StyleSheet.create({
   container: {
@@ -61,9 +58,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     top: 115,
-    right:1,
+    right: 1,
     height: 100,
     width: 120,
-  }
+  },
 });
-

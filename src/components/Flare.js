@@ -38,6 +38,7 @@ function Flare(props) {
     fpostGlasses();
   }, [glasses]);
 
+  console.log(glasses);
   return (
     <View>
       <Card title={props.flare.title}>
@@ -107,6 +108,6 @@ const styles = StyleSheet.create({
   glassesCount: {
     flexDirection: "row",
     textAlign: "right",
-    width: 150,
+    width: 180,
   },
 });

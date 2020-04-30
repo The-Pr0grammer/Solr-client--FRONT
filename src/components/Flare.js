@@ -116,8 +116,11 @@ function Flare(props) {
             style={styles.userPic}
             source={{ uri: props.flare.user.image_url }}
           ></Image>
-          <Text style={styles.username} h4>
+          <Text h4 style={styles.username} >
             {props.flare.user.name}
+          </Text>
+          <Text h5 style={styles.location} >
+            {props.flare.user.location}
           </Text>
         </View>
         <TouchableOpacity
@@ -269,5 +272,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 20,
     textAlign: "center",
+  },
+  location: {
+    flexDirection: "row",
+    textAlign: "right",
+    width: 160,
+    height: 30,
+    left:40,
   },
 });

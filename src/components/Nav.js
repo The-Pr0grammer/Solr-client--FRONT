@@ -22,12 +22,18 @@ function Nav() {
         name="Explore"
         component={Explore}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Explore",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="pulse"
               color={"green"}
-              style={{ fontSize: 46, width: 70, height: 60 }}
+              style={{
+                fontSize: 46,
+                width: 70,
+                height: 60,
+                bottom: 13,
+                left: 9,
+              }}
             />
           ),
         }}
@@ -36,9 +42,31 @@ function Nav() {
         name="Login"
         component={Login}
         options={{
-          tabBarLabel: "midStarFourPoints",
+          tabBarLabel: "Saved",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="midStarFourPoints" color={"green"} size={26} />
+            <MaterialCommunityIcons name="glasses" color={"gold"} style={{
+                fontSize: 40,
+                width: 70,
+                height: 60,
+                bottom: 13,
+                left: 16,
+              }}/>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Nav"
+        component={Nav}
+        options={{
+          tabBarLabel: "Shoot",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="star" color={"red"} style={{
+                fontSize: 40,
+                width: 70,
+                height: 60,
+                bottom: 13,
+                left: 16,
+              }}/>
           ),
         }}
       />

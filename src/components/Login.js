@@ -34,7 +34,7 @@ function Login({ navigation }) {
         <Button
           style={styles.loginButton}
           title="Log in"
-          onPress={() => navigation.navigate("Explore")}
+          onPress={() => navigation.navigate("Nav")}
         />
         <Text h6 style={styles.signupMess}>
           Don't have an account? Sign up for free.

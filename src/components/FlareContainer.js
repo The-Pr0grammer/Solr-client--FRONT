@@ -10,35 +10,31 @@ import {
   Input,
   ThemeProvider,
   Button,
-  Icon,
   Text,
   Card,
 } from "react-native-elements";
 import Flare from "./Flare.js";
+import {
+  createMaterialBottomTabNavigator,
+  NavigationContainer,
+} from "@react-navigation/material-bottom-tabs";
+import { Icon } from "native-base";
 
-const renderFlares = (props) => {
-  console.log(props.flares);
-  return props.flares.map((flare) => <Flare key={flare.id} flare={flare} />);
-};
+import Login from "./Login";
+import Explore from "./Explore";
 
 function FlareContainer(props) {
-  return <ScrollView>{renderFlares(props)}</ScrollView>;
+  return (
+    <ScrollView>
+      {/* {MyTabs()} */}
+      {renderFlares(props)}
+    </ScrollView>
+  );
 }
 
 export default FlareContainer;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    bottom: 2,
-  },
-  background: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-    width: "100%",
-    top: 4,
-  },
-});
+const renderFlares = (props) => {
+  console.log(props.flares);
+  return props.flares.map((flare) => <Flare key={flare.id} flare={flare} />);
+}

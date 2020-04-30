@@ -38,7 +38,7 @@ function Flare(props) {
   };
 
   let [glasses, glassesIncr] = useState(props.flare["😎"]);
-  let [views, viewsIncr] = useState(props.flare.views);
+  let [interacts, interactsIncr] = useState(props.flare.interacts);
   let [modView, modViewToggle] = useState(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function Flare(props) {
 
   // useEffect(() => {
   //   fpostGlasses();
-  // }, [views]);
+  // }, [interacts]);
 
   fireModal = (props) => {
     return <ModalFlare flare={props.flare} />;
@@ -85,6 +85,12 @@ function Flare(props) {
                 🔙
               </Text>
             </TouchableHighlight>
+            {props.flare.image_url && (
+              <Image
+                style={styles.modalImage}
+                source={{ uri: props.flare.image_url }}
+              ></Image>
+            )}
             <Text
               h3
               style={{
@@ -94,12 +100,8 @@ function Flare(props) {
                 top: 50,
               }}
             >
-              {props.flare.title}
+              {props.flare.content}
             </Text>
-            <Image
-              style={styles.modalImage}
-              source={{ uri: props.flare.image_url }}
-            ></Image>
             <SafeAreaView style={styles.respDiv}>
               <FlatList
                 data={props.flare.responses}
@@ -110,23 +112,23 @@ function Flare(props) {
           </View>
         </Modal>
       </View>
-      <Card title={props.flare.title}>
+      <Card title={"free real estate"}>
         <View style={styles.userDiv}>
           <Image
             style={styles.userPic}
             source={{ uri: props.flare.user.image_url }}
           ></Image>
-          <Text h4 style={styles.username} >
+          <Text h5 style={styles.username}>
             {props.flare.user.name}
           </Text>
-          <Text h5 style={styles.location} >
+          <Text h5 style={styles.location}>
             {props.flare.user.location}
           </Text>
         </View>
         <TouchableOpacity
           onPress={() => {
             modViewToggle(!modView);
-            viewsIncr(views + 1);
+            interactsIncr(interacts + 1);
           }}
           style={{
             flexDirection: "row",
@@ -144,16 +146,18 @@ function Flare(props) {
         >
           <Text>💬</Text>
         </TouchableOpacity>
-        <Image
-          style={styles.cardImg}
-          source={{ uri: props.flare.image_url }}
-        ></Image>
+        {props.flare.image_url && (
+          <Image
+            style={styles.cardImg}
+            source={{ uri: props.flare.image_url }}
+          ></Image>
+        )}
         <Text h5 style={styles.flareContent}>
           {props.flare.content}{" "}
         </Text>
         <View style={styles.glassesDiv}>
-          <Text h4 style={styles.viewsCount}>
-            👀{views}
+          <Text h4 style={styles.interactsCount}>
+            🔗{interacts}
           </Text>
           <Text h4 style={styles.glassesCount}>
             {glasses}
@@ -215,7 +219,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
     width: 180,
   },
-  viewsCount: {
+  interactsCount: {
     flexDirection: "row",
     textAlign: "left",
     left: 40,
@@ -278,6 +282,6 @@ const styles = StyleSheet.create({
     textAlign: "right",
     width: 160,
     height: 30,
-    left:40,
+    left: 40,
   },
 });

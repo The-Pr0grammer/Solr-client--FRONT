@@ -17,6 +17,7 @@ import {
 } from "react-native-elements";
 import FlareContainer from "./FlareContainer.js";
 import { useState, useEffect } from "react";
+import Login from "./Login";
 
 function Explore({ navigation }, props) {
   const getFlares = () => {
@@ -24,6 +25,7 @@ function Explore({ navigation }, props) {
       .then((resp) => resp.json())
       .then((fflares) => updateFlares(fflares));
   };
+
   let [flares, updateFlares] = useState([]);
 
   useEffect(() => {
@@ -40,10 +42,8 @@ export default Explore;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
+    flex: 0,
+    width: "100%",
     bottom: 2,
   },
   background: {
@@ -52,5 +52,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     top: 4,
+  },
+  tabsDiv: {
+    backgroundColor: "gold",
+    height: 100,
+    width: 150,
   },
 });

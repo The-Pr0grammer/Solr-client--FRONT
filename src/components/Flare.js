@@ -64,9 +64,13 @@ function Flare(props) {
   }
 
   return (
-    <View
+    <ImageBackground
       onPress={(props) => fireModal(props)}
-      style={{ backgroundColor: "black" }}
+      source={{
+        uri:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSRefmgcmYYjpgU7O1BlKfFqBBrTlQTkr4dkc8yZuqZWBzCDHrK&usqp=CAU",
+      }}
+      style={styles.container}
     >
       <View style={{ flex: 1 }}>
         <Modal isVisible={modView}>
@@ -141,7 +145,7 @@ function Flare(props) {
           style={styles.cardImg}
           source={{ uri: props.flare.image_url }}
         ></Image>
-        <Text h5 style={{ marginBottom: 10 }}>
+        <Text h5 style={styles.flareContent}>
           {props.flare.content}{" "}
         </Text>
         <View style={styles.glassesDiv}>
@@ -174,7 +178,7 @@ function Flare(props) {
           </TouchableOpacity>
         </View>
       </Card>
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -183,10 +187,8 @@ export default Flare;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
-    bottom: 2,
+
+    bottom: 1,
   },
   background: {
     flex: 1,
@@ -255,9 +257,17 @@ const styles = StyleSheet.create({
   },
   userPic: {
     flexDirection: "row",
-    backgroundColor:"gold",
+    backgroundColor: "gold",
     width: 40,
     height: 30,
     borderRadius: 18,
+  },
+  flareContent: {
+    marginBottom: 10,
+    marginTop: 10,
+    marginRight: 10,
+    marginLeft: 10,
+    fontSize: 20,
+    textAlign: "center",
   },
 });

@@ -30,7 +30,6 @@ export default FlareContainer;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
     bottom: 2,

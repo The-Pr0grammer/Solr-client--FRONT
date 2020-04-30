@@ -13,5 +13,5 @@ function Nav() {
     </Tab.Navigator>
   );
 }
-
+// nav
 export default Nav;

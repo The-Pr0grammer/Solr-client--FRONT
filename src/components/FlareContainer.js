@@ -26,7 +26,6 @@ import Explore from "./Explore";
 function FlareContainer(props) {
   return (
     <ScrollView>
-      {/* {MyTabs()} */}
       {renderFlares(props)}
     </ScrollView>
   );

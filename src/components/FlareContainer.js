@@ -24,16 +24,11 @@ import Login from "./Login";
 import Explore from "./Explore";
 
 function FlareContainer(props) {
-  return (
-    <ScrollView>
-      {renderFlares(props)}
-    </ScrollView>
-  );
+  return <ScrollView>{renderFlares(props)}</ScrollView>;
 }
 
 export default FlareContainer;
 
 const renderFlares = (props) => {
-  console.log(props.flares);
   return props.flares.map((flare) => <Flare key={flare.id} flare={flare} />);
-}
+};

@@ -53,12 +53,19 @@ function Flare(props) {
   };
 
   function Response(rsp) {
-    console.log(rsp.title);
     return (
       <View style={styles.item}>
-        <Text h4 style={styles.response}>
-          {rsp.title.content}
-        </Text>
+        <Text style={styles.response}>{rsp.title.content}</Text>
+        <View style={styles.rspUserDiv}>
+          <Text h5 style={{ textAlign: "right", marginRight: 5,top:18}}>
+            @{rsp.title.user.name}
+          </Text>
+          <Image
+            resizeMode={"cover"}
+            style={styles.rspUserPic}
+            source={{ uri: rsp.title.user.image_url }}
+          ></Image>
+        </View>
       </View>
     );
   }
@@ -72,7 +79,7 @@ function Flare(props) {
       }}
       style={styles.container}
     >
-      <View style={{ flex: 1 }}>
+      <View style={styles.card}>
         <Modal isVisible={modView}>
           <View style={{ flex: 1 }}>
             <TouchableHighlight
@@ -98,7 +105,7 @@ function Flare(props) {
             <Text
               h3
               style={{
-                top: 50,
+                top: 38,
                 color: "gold",
                 justifyContent: "center",
                 textAlign: "center",
@@ -116,10 +123,10 @@ function Flare(props) {
           </View>
         </Modal>
       </View>
-      <Card>
+      <Card style={styles.card}>
         <View style={styles.userDiv}>
           <Image
-          resizeMode={"cover"}
+            resizeMode={"cover"}
             style={styles.userPic}
             source={{ uri: props.flare.user.image_url }}
           ></Image>
@@ -142,7 +149,7 @@ function Flare(props) {
         <Text h5 style={styles.flareContent}>
           {props.flare.content}{" "}
         </Text>
-        <View style={styles.interactionssDiv}>
+        <View style={styles.glassesDiv}>
           <Text h4 style={styles.interactsCount}>
             🔗{interacts}
           </Text>
@@ -158,11 +165,10 @@ function Flare(props) {
               backgroundColor: "#1357BE",
               width: 40,
               bottom: 2,
-              left:40,
+              left: 40,
               borderRadius: 25,
               marginLeft: 0,
               marginRight: 0,
-              marginBottom: 10,
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -172,27 +178,29 @@ function Flare(props) {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-          onPress={() => {
-            modViewToggle(!modView);
-            interactsIncr(interacts + 1);
-          }}
-          style={{
-            flexDirection: "row",
-            backgroundColor: "#1357BE",
-            width: 40,
-            bottom: 2,
-            borderRadius: 25,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 10,
-            alignItems: "center",
-            justifyContent: "center",
-            right:"120%"
-          }}
-        >
-          <Text>💬</Text>
-        </TouchableOpacity>
+            onPress={() => {
+              modViewToggle(!modView);
+              interactsIncr(interacts + 1);
+            }}
+            style={{
+              flexDirection: "row",
+              backgroundColor: "#1357BE",
+              width: 40,
+              top: 5,
+              borderRadius: 25,
+              marginLeft: 0,
+              marginRight: 0,
+              alignItems: "center",
+              justifyContent: "center",
+              right: "119%",
+            }}
+          >
+            <Text>💬</Text>
+          </TouchableOpacity>
         </View>
+        <Text style={{ textAlign: "center", right: 5, top: 0 }} h4>
+          {props.flare.responses.length}
+        </Text>
       </Card>
     </ImageBackground>
   );
@@ -202,21 +210,21 @@ export default Flare;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     bottom: 1,
   },
-  background: {
+  card: {
     flex: 1,
-    resizeMode: "cover",
     justifyContent: "center",
+    height: 45,
     width: "100%",
-    top: 4,
   },
   imgDiv: {
     resizeMode: "cover",
     justifyContent: "center",
     height: 314,
     width: "100%",
+    marginBottom: 20,
   },
   cardImg: {
     flex: 5,
@@ -237,18 +245,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     textAlign: "right",
     width: 180,
+    left: 37,
   },
   interactsCount: {
     flexDirection: "row",
     textAlign: "left",
-    left: 40,
-    width: 180,√
-  },
-  interactionsDiv: {
-    flexDirection: "row",
-    width: "40%",
-    justifyContent: "flex-end",
-    left: 218,
+    left: 73,
+    width: 180,
   },
   backButton: {
     backgroundColor: "gold",
@@ -260,18 +263,17 @@ const styles = StyleSheet.create({
   },
   respDiv: {
     marginTop: Constants.statusBarHeight,
-    top: 20,
-    height: "50%",
+    top: 5,
+    height: "40%",
   },
   item: {
     backgroundColor: "aqua",
     padding: 18,
     marginVertical: 8,
-    marginHorizontal: 16,
     borderRadius: 25,
   },
   modImgDiv: {
-    top: 20,
+    top: 10,
     height: 350,
     width: "100%",
   },
@@ -290,7 +292,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     width: 100,
     height: 30,
-    left:3
+    left: 3,
   },
   userPic: {
     flexDirection: "row",
@@ -301,7 +303,6 @@ const styles = StyleSheet.create({
   },
   flareContent: {
     marginBottom: 10,
-    marginTop: 10,
     marginRight: 10,
     marginLeft: 10,
     fontSize: 20,
@@ -313,5 +314,19 @@ const styles = StyleSheet.create({
     width: 160,
     height: 30,
     left: 40,
+  },
+  rspUserPic: {
+    backgroundColor: "gold",
+    width: 45,
+    height: 38,
+    borderRadius: 20,
+  },
+  rspUserDiv: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    height: 26,
+  },
+  response: {
+    fontSize: 26,
   },
 });

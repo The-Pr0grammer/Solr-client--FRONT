@@ -57,7 +57,7 @@ function Flare(props) {
       <View style={styles.item}>
         <Text style={styles.response}>{rsp.title.content}</Text>
         <View style={styles.rspUserDiv}>
-          <Text h5 style={{ textAlign: "right", marginRight: 5,top:18}}>
+          <Text h5 style={{ textAlign: "right", marginRight: 5, top: 18 }}>
             @{rsp.title.user.name}
           </Text>
           <Image
@@ -201,6 +201,14 @@ function Flare(props) {
         <Text style={{ textAlign: "center", right: 5, top: 0 }} h4>
           {props.flare.responses.length}
         </Text>
+        <View style={styles.orbitDiv}>
+          <TouchableOpacity style={{ height: 35, width: 45, bottom: 28 ,left:70}}>
+            <Icon name="orbit" type="material-community" color="magenta" size={37}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ height: 37, width: 45, bottom: 28 ,left:186}}>
+            <Icon name="plus-circle" type="feather" color="green" size={37}/>
+          </TouchableOpacity>
+        </View>
       </Card>
     </ImageBackground>
   );
@@ -328,5 +336,10 @@ const styles = StyleSheet.create({
   },
   response: {
     fontSize: 26,
+  },
+  orbitDiv: {
+    height: 0,
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
 });

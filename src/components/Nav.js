@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Login from "./Login.js";
 import Explore from "./Explore.js";
+import FlareForm from "./FlareForm.js";
 import Profile from "./Profile.js";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "@mdi/react";
@@ -13,7 +14,7 @@ const Tab = createMaterialBottomTabNavigator();
 function Nav() {
   return (
     <Tab.Navigator
-      labelStyle={{ fontSize: 170 ,top:0}}
+      labelStyle={{ fontSize: 170, top: 0 }}
       shifting={false}
       activeColor={"gold"}
       inactiveColor={"black"}
@@ -24,8 +25,8 @@ function Nav() {
       size={30}
     >
       <Tab.Screen
-        name="Login"
-        component={Login}
+        name="FFExplore"
+        component={FlareForm}
         options={{
           forceTitlesDisplay: true,
           bottomTabs: {
@@ -37,11 +38,11 @@ function Nav() {
               name="flare"
               color={"orangered"}
               style={{
-                fontSize: 46,
+                fontSize: 38,
                 width: 70,
                 height: 60,
                 bottom: 13,
-                left: 9,
+                left: 16,
               }}
             />
           ),
@@ -85,11 +86,11 @@ function Nav() {
               name="content-save"
               color={"coral"}
               style={{
-                fontSize: 40,
+                fontSize: 36,
                 width: 70,
                 height: 60,
                 bottom: 11,
-                left: 16,
+                left: 18,
               }}
             />
           ),
@@ -109,7 +110,7 @@ function Nav() {
               name="account-card-details"
               color={"darkblue"}
               style={{
-                fontSize: 40,
+                fontSize: 38,
                 width: 70,
                 height: 60,
                 bottom: 11,

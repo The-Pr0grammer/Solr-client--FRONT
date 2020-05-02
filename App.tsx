@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./src/components/Login.js";
 import Explore from "./src/components/Explore.js";
+import FlareForm from "./src/components/FlareForm.js";
 import Nav from "./src/components/Nav.js";
 
 const Stack = createStackNavigator();
@@ -16,6 +17,7 @@ export default class App extends React.Component {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Nav" component={Nav} />
           <Stack.Screen name="Explore" component={Explore} />
+          <Stack.Screen name="FlareForm" component={FlareForm} />
         </Stack.Navigator>
       </NavigationContainer>
     );

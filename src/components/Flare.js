@@ -1,7 +1,6 @@
 import * as React from "react";
 import {
   View,
-  ScrollView,
   StyleSheet,
   Image,
   ImageBackground,
@@ -80,7 +79,7 @@ function Flare(props) {
       style={styles.container}
     >
       <View style={styles.card}>
-        <Modal isVisible={modView}>
+        <Modal isVisible={modView} statusBarTranslucent={false}>
           <View style={{ flex: 1 }}>
             <TouchableHighlight
               onPress={() => {
@@ -123,7 +122,7 @@ function Flare(props) {
           </View>
         </Modal>
       </View>
-      <Card style={styles.card}>
+      <Card style={styles.card} borderRadius={20}>
         <View style={styles.userDiv}>
           <Image
             resizeMode={"cover"}
@@ -151,20 +150,27 @@ function Flare(props) {
         </Text>
         <View style={styles.glassesDiv}>
           <Text h4 style={styles.interactsCount}>
-            🔗{interacts}
+            {interacts}
           </Text>
+          <Icon
+            name="link-variant"
+            type="material-community"
+            color="dodgerblue"
+            size={37}
+            right={68}
+          />
           <Text h4 style={styles.glassesCount}>
             {glasses}
           </Text>
           <TouchableOpacity
             onPress={() => {
               glassesIncr(glasses + 1);
+              interactsIncr(interacts + 1);
             }}
             style={{
               flexDirection: "row",
-              backgroundColor: "#1357BE",
               width: 40,
-              bottom: 2,
+              bottom: 4,
               left: 40,
               borderRadius: 25,
               marginLeft: 0,
@@ -173,9 +179,12 @@ function Flare(props) {
               justifyContent: "center",
             }}
           >
-            <Text style={{ textAlign: "center", justifyContent: "center" }} h4>
-              😎
-            </Text>
+            <Icon
+              name="sunglasses"
+              type="material-community"
+              color="black"
+              size={37}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -184,7 +193,6 @@ function Flare(props) {
             }}
             style={{
               flexDirection: "row",
-              backgroundColor: "#1357BE",
               width: 40,
               top: 5,
               borderRadius: 25,
@@ -195,18 +203,35 @@ function Flare(props) {
               right: "119%",
             }}
           >
-            <Text>💬</Text>
+            <Icon
+              name="message-text"
+              type="material-community"
+              color="silver"
+              size={37}
+            />
           </TouchableOpacity>
         </View>
         <Text style={{ textAlign: "center", right: 5, top: 0 }} h4>
           {props.flare.responses.length}
         </Text>
         <View style={styles.orbitDiv}>
-          <TouchableOpacity style={{ height: 35, width: 45, bottom: 28 ,left:70}}>
-            <Icon name="orbit" type="material-community" color="magenta" size={37}/>
+          <TouchableOpacity
+            style={{ height: 35, width: 45, bottom: 28, left: 40 }}
+          >
+            <Icon
+              name="orbit"
+              type="material-community"
+              color="magenta"
+              size={37}
+            />
           </TouchableOpacity>
-          <TouchableOpacity style={{ height: 37, width: 45, bottom: 28 ,left:186}}>
-            <Icon name="plus-circle" type="feather" color="green" size={37}/>
+          <TouchableOpacity
+            style={{ height: 37, width: 45, bottom: 28, left: 216 }}
+            onPress={() => {
+              interactsIncr(interacts + 1);
+            }}
+          >
+            <Icon name="plus-circle" type="feather" color="green" size={37} />
           </TouchableOpacity>
         </View>
       </Card>
@@ -258,7 +283,8 @@ const styles = StyleSheet.create({
   interactsCount: {
     flexDirection: "row",
     textAlign: "left",
-    left: 73,
+    fontSize: 26,
+    left: 150,
     width: 180,
   },
   backButton: {

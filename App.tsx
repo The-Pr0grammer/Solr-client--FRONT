@@ -13,11 +13,10 @@ export default class App extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator headerMode={"none"}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Nav" component={Nav} />
           <Stack.Screen name="Explore" component={Explore} />
-          <Stack.Screen name="FlareForm" component={FlareForm} />
         </Stack.Navigator>
       </NavigationContainer>
     );

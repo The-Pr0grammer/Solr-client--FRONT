@@ -200,7 +200,7 @@ function Flare(props) {
               marginRight: 0,
               alignItems: "center",
               justifyContent: "center",
-              right: "119%",
+              right: 163,
             }}
           >
             <Icon

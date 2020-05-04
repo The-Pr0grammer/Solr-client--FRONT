@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import {
   View,
   ScrollView,
@@ -8,6 +10,8 @@ import {
   Modal,
   TouchableHighlight,
   Alert,
+  TextInput,
+  Switch,
 } from "react-native";
 import {
   Input,
@@ -21,26 +25,56 @@ import {
   FormValidationMessage,
 } from "react-native-elements";
 import FlareContainer from "./FlareContainer.js";
-import { useState, useEffect } from "react";
+import Explore from "./Explore.js";
+import { set } from "react-native-reanimated";
 
 function FlareForm({ navigation }, props) {
-  const getFlares = () => {
-    fetch("http://0.0.0.0:3000/flares")
-      .then((resp) => resp.json())
-      .then((fflares) => updateFlares(fflares));
+  const shootFlare = () => {
+    navigation.navigate("Explore");
+    onChangeText(" ");
+    setIsEnabled(false);
+    onChangeImgURL("Enter a URL");
+    fetch("http://0.0.0.0:3000/flares", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        userId: 1,
+        interacts: 0,
+        content: value,
+        image_url: imgURL,
+        "😎": 0,
+      }),
+    })
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (res) {
+        console.log(res);
+      });
   };
 
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState();
   const someFunction = () => {};
 
-  let [flares, updateFlares] = useState([]);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    getFlares();
-  }, []);
+    setModalVisible(!modalVisible);
+  }, [isFocused]);
+
+  const [value, onChangeText] = React.useState(" ");
+  const [imgURL, onChangeImgURL] = React.useState("Enter a URL");
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    onChangeImgURL("Enter a URL");
+    setIsEnabled((previousState) => !previousState);
+  };
 
   return (
-    <View style={styles.centeredView}>
+    <View>
       <Modal
         animationType="fade"
         transparent={true}
@@ -51,53 +85,168 @@ function FlareForm({ navigation }, props) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+            <Text style={styles.flareTextPrompt}>
+              What do you want your flare to say?
+            </Text>
+            <TextInput
+              multiline
+              numberOfLines={3}
+              onChangeText={(text) => onChangeText(text)}
+              value={value}
+              style={styles.flareText}
+              textAlign={"center"}
+              selectionColor={"magenta"}
+            />
+
+            <View style={{ justifyContent: "center", top: 60 }}>
+              <Text style={styles.flareImgPrompt}>
+                Do you want to include an image?
+              </Text>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+                style={{ top: 146, left: 198 }}
+              />
+            </View>
+            {isEnabled && (
+              <TextInput
+                numberOfLines={1}
+                onChangeText={(imgURL) => onChangeImgURL(imgURL)}
+                value={imgURL}
+                style={styles.imgURL}
+                textAlign={"center"}
+                selectionColor={"magenta"}
+              />
+            )}
 
             <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "red" }}
+              underlayColor="	chartreuse	"
+              style={styles.shootButton}
+              onPress={shootFlare}
+            >
+              <Text style={styles.sButtonText}>Shoot Flare</Text>
+            </TouchableHighlight>
+
+            <Icon
+              name="flare"
+              type="material-community"
+              color="orangered"
+              size={45}
+              top={253}
+            />
+
+            <TouchableHighlight
+              underlayColor="brown"
+              style={styles.cancelButton}
               onPress={() => {
-                setModalVisible(!modalVisible);
+                navigation.navigate("Explore");
+                onChangeText(" ");
+                setIsEnabled(false);
+                onChangeImgURL("Enter a URL");
               }}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <View style={styles.cButtonDiv}>
+                <Text style={styles.cButtonText}>Cancel</Text>
+                <Icon
+                  name="close"
+                  type="material-community"
+                  color="crimson"
+                  size={45}
+                  top={3}
+                />
+              </View>
             </TouchableHighlight>
           </View>
         </View>
       </Modal>
-      <FlareContainer flares={flares} />
     </View>
   );
 }
 export default FlareForm;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: 50,
-    width: "100%",
-    bottom: 2,
-  },
   centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 5,
-    height: 50,
+    height: "100%",
+    backgroundColor: "gold",
   },
   modalView: {
-    height:"100%",
-    margin: 50,
-    borderRadius: 20,
+    height: 450,
+    top: 135,
+    // margin: 50,
+    borderRadius: 50,
     padding: 5,
+    justifyContent: "flex-end",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 200,
-    },
+    backgroundColor: "gold",
   },
-  modalText: {
-    marginBottom: 15,
+  flareTextPrompt: {
+    width: 310,
+    top: 198,
     textAlign: "center",
+    fontSize: 24,
+    color: "magenta",
+  },
+  flareImgPrompt: {
+    width: 310,
+    top: 175,
+    textAlign: "center",
+    fontSize: 24,
+    color: "magenta",
+  },
+  sButtonText: {
+    top: 10,
+    textAlign: "center",
+    color: "orangered",
+    fontSize: 18,
+  },
+
+  cButtonText: {
+    top: 10,
+    textAlign: "center",
+    color: "tan",
+    fontSize: 18,
+  },
+  cancelButton: {
+    bottom: 440,
+    left: 145,
+    backgroundColor: "brown",
+    borderRadius: 80,
+    height: 70,
+    width: 70,
+    marginBottom: 20,
+  },
+  shootButton: {
+    top: 300,
+    backgroundColor: "dodgerblue",
+    borderRadius: 30,
+    height: 75,
+    width: 130,
+  },
+  sButtonDiv: {
+    bottom: 230,
+  },
+  flareText: {
+    top: 220,
+    left: 2,
+    fontSize: 32,
+    height: 200,
+    width: "100%",
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 20,
+    backgroundColor: "orange",
+  },
+  imgURL: {
+    position: "absolute",
+    height: 55,
+    width: 350,
+    top: 450,
+    borderColor: "gray",
+    borderRadius: 26,
+    backgroundColor: "orange",
+    fontSize: 32,
   },
 });

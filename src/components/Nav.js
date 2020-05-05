@@ -71,7 +71,7 @@ function Nav() {
             />
           ),
         }}
-        initialParams={{test:"beef"}}
+        initialParams={{ test: Math.random() }}
       />
       <Tab.Screen
         name="Saved"

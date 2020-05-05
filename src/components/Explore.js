@@ -33,6 +33,12 @@ function Explore({ navigation, route }, props) {
     getFlares();
   }, []);
 
+  useEffect(() => {
+    if (route.params.newFlare) {
+      updateFlares([...flares, route.params.newFlare]);
+    }
+  }, [route.params.newFlare]);
+
   const [rrTrigger, forceRR] = useState(0);
   // const isFocused = useIsFocused();
   // const [, updateState] = React.useState();

@@ -24,19 +24,22 @@ import {
   FormInput,
   FormValidationMessage,
 } from "react-native-elements";
-import FlareContainer from "./FlareContainer.js";
-import Explore from "./Explore.js";
-import { set } from "react-native-reanimated";
+import Loader from "./Loader.js";
+// import { set } from "react-native-reanimated";
+// import AnimatedLoader from "react-native-animated-loader";
 
 function FlareForm({ navigation }, props) {
   const shootFlare = async () => {
+    toggleLoading(!loading);
     onChangeText(" ");
     setIsEnabled(false);
+    setModalVisible(false);
     onChangeImgURL("Enter a URL");
+
     await navigation.setParams({
-      trigg: Math.random(),
+      trigggggg: Math.random(),
     });
-    navigation.navigate("Explore", { trigg: Math.random() });
+
     fetch("http://0.0.0.0:3000/flares", {
       headers: {
         Accept: "application/json",
@@ -53,22 +56,27 @@ function FlareForm({ navigation }, props) {
       }),
     })
       .then(function (res) {
-        console.log(res.json());
+        return res.json();
       })
+      .then(
+        (res) => navigation.navigate("Explore", { newFlare: res })
+        //
+      ) //change loading bool
       .catch(function (res) {
-        console.log(res.json());
+        // console.log(res.json());
       });
   };
 
-  const [modalVisible, setModalVisible] = useState();
-  const someFunction = () => {};
-
-  const isFocused = useIsFocused();
-
   useEffect(() => {
-    setModalVisible(!modalVisible);
-  }, [isFocused]);
+    const rr = navigation.addListener("focus", () => {
+      setModalVisible(true);
+      toggleLoading(false);
+    });
+  });
 
+  const [modalVisible, setModalVisible] = useState(true);
+  const [loading, toggleLoading] = useState(false);
+  const isFocused = useIsFocused();
   const [value, onChangeText] = React.useState(" ");
   const [imgURL, onChangeImgURL] = React.useState("Enter a URL");
   const [isEnabled, setIsEnabled] = useState(false);
@@ -79,6 +87,7 @@ function FlareForm({ navigation }, props) {
 
   return (
     <View>
+      <Loader/>
       <Modal
         animationType="fade"
         transparent={true}
@@ -146,7 +155,8 @@ function FlareForm({ navigation }, props) {
               underlayColor="brown"
               style={styles.cancelButton}
               onPress={() => {
-                navigation.goBack({ names: ["Brent", "Satya", "Michaś"] });
+                setModalVisible(false);
+                navigation.goBack();
                 onChangeText(" ");
                 setIsEnabled(false);
                 onChangeImgURL("Enter a URL");
@@ -251,5 +261,9 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     backgroundColor: "orange",
     fontSize: 32,
+  },
+  lottie: {
+    width: 100,
+    height: 100,
   },
 });

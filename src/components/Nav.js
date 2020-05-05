@@ -25,7 +25,7 @@ function Nav() {
       size={30}
     >
       <Tab.Screen
-        name="FFExplore"
+        name="FlareForm"
         component={FlareForm}
         options={{
           forceTitlesDisplay: true,
@@ -71,6 +71,7 @@ function Nav() {
             />
           ),
         }}
+        initialParams={{test:"beef"}}
       />
       <Tab.Screen
         name="Saved"

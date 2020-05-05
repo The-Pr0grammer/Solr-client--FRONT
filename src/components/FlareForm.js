@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, route, setParams } from "@react-navigation/native";
 import {
   View,
   ScrollView,
@@ -29,11 +29,14 @@ import Explore from "./Explore.js";
 import { set } from "react-native-reanimated";
 
 function FlareForm({ navigation }, props) {
-  const shootFlare = () => {
-    navigation.navigate("Explore");
+  const shootFlare = async () => {
     onChangeText(" ");
     setIsEnabled(false);
     onChangeImgURL("Enter a URL");
+    await navigation.setParams({
+      trigg: Math.random(),
+    });
+    navigation.navigate("Explore", { trigg: Math.random() });
     fetch("http://0.0.0.0:3000/flares", {
       headers: {
         Accept: "application/json",
@@ -41,18 +44,19 @@ function FlareForm({ navigation }, props) {
       },
       method: "POST",
       body: JSON.stringify({
-        userId: 1,
+        user_id: 1,
         interacts: 0,
         content: value,
         image_url: imgURL,
-        "😎": 0,
+        ["😎"]: 0,
+        purpose: "new-flare",
       }),
     })
       .then(function (res) {
-        console.log(res);
+        console.log(res.json());
       })
       .catch(function (res) {
-        console.log(res);
+        console.log(res.json());
       });
   };
 
@@ -90,7 +94,7 @@ function FlareForm({ navigation }, props) {
             </Text>
             <TextInput
               multiline
-              numberOfLines={3}
+              numberOfLines={5}
               onChangeText={(text) => onChangeText(text)}
               value={value}
               style={styles.flareText}
@@ -123,7 +127,7 @@ function FlareForm({ navigation }, props) {
             )}
 
             <TouchableHighlight
-              underlayColor="	chartreuse	"
+              underlayColor="chartreuse"
               style={styles.shootButton}
               onPress={shootFlare}
             >
@@ -142,7 +146,7 @@ function FlareForm({ navigation }, props) {
               underlayColor="brown"
               style={styles.cancelButton}
               onPress={() => {
-                navigation.navigate("Explore");
+                navigation.goBack({ names: ["Brent", "Satya", "Michaś"] });
                 onChangeText(" ");
                 setIsEnabled(false);
                 onChangeImgURL("Enter a URL");
@@ -180,7 +184,6 @@ const styles = StyleSheet.create({
     padding: 5,
     justifyContent: "flex-end",
     alignItems: "center",
-    backgroundColor: "gold",
   },
   flareTextPrompt: {
     width: 310,

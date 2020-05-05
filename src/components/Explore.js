@@ -17,9 +17,10 @@ import {
 } from "react-native-elements";
 import FlareContainer from "./FlareContainer.js";
 import { useState, useEffect } from "react";
+import { useIsFocused, navigate } from "@react-navigation/native";
 import Login from "./Login";
 
-function Explore({ navigation }, props) {
+function Explore({ navigation, route }, props) {
   const getFlares = () => {
     fetch("http://0.0.0.0:3000/flares")
       .then((resp) => resp.json())
@@ -32,8 +33,29 @@ function Explore({ navigation }, props) {
     getFlares();
   }, []);
 
+  const [rrTrigger, forceRR] = useState(0);
+  // const isFocused = useIsFocused();
+  // const [, updateState] = React.useState();
+  // const forceUpdate = React.useCallback(() => updateState({}), []);
+
+  // {
+  //   isFocused && forceRR(!rrTrigger);
+  // }
+
+  // console.log(navigation);
+
+  React.useEffect(() => {
+    const rr = navigation.addListener("focus", () => {
+      console.log(route.params);
+      forceRR(route.params.trigg);
+    });
+
+    return rr;
+  }, [navigation]);
+
   return (
     <View>
+      {/* {rrTrigger} */}
       <FlareContainer flares={flares} />
     </View>
   );

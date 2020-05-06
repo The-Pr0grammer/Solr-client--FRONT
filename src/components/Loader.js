@@ -26,10 +26,9 @@ export default class Loader extends React.Component {
             <Animation
               ref={(animation) => (this.myAnimation = animation)}
               style={{
-                top:60,
+                top:40,
                 width: 400,
                 height: 400,
-                
               }}
               source={require("../images/8572-liquid-blobby-loader.json")}
             />

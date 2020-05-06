@@ -47,7 +47,7 @@ function Flare(props) {
   //   fpostGlasses();
   // }, [interacts]);
 
-  fireModal = (props) => {
+  const fireModal = (props) => {
     return <ModalFlare flare={props.flare} />;
   };
 

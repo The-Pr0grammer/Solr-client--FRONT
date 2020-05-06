@@ -38,36 +38,40 @@ export default class FlareContainer extends React.Component {
   };
 
   componentDidMount() {
-    this.playAnimation();
     this.setState({ loading: true });
+    this.playAnimation();
   }
 
   componentWillReceiveProps() {
-    this.setState({ loading: false });
+    {
+      this.props.gotData && this.setState({ loading: !this.props.gotData });
+    }
   }
 
   render() {
+    console.log("loading:", this.state.loading);
+    console.log("gotData:", this.props.gotData);
     return (
-      <ScrollView>
-        {this.state.loading && (
-          <View>
-            {this.state.loading && (
-              <View style={styles.animationContainer}>
-                <Animation
-                  ref={(animation) => (this.myAnimation = animation)}
-                  style={{
-                    top: 60,
-                    width: 400,
-                    height: 400,
-                  }}
-                  source={require("../images/9696-world-flat-color.json")}
-                />
-              </View>
-            )}
-          </View>
-        )}
-        <View>{this.renderFlares(this.props)}</View>
-      </ScrollView>
+      <View style={styles.animationContainer}>
+        {this.state.loading &&
+          !this.props.gotData && (
+            <View>
+              <Animation
+                ref={(animation) => (this.myAnimation = animation)}
+                style={{
+                  top: 77,
+                  width: 400,
+                  height: 400,
+                }}
+                source={require("../images/9696-world-flat-color.json")}
+              />
+            </View>
+          )}
+
+        <ScrollView>
+          <View>{this.renderFlares(this.props)}</View>
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -78,6 +82,5 @@ const styles = StyleSheet.create({
     backgroundColor: "dodgerblue",
     width: "100%",
     height: "100%",
-    bottom: 2,
   },
 });

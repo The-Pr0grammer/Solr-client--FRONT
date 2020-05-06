@@ -24,10 +24,11 @@ function Explore({ navigation, route }, props) {
   const getFlares = () => {
     fetch("http://0.0.0.0:3000/flares")
       .then((resp) => resp.json())
-      .then((fflares) => updateFlares(fflares));
+      .then((fflares) => {
+        updateFlares(fflares);
+        dataHere(true);
+      });
   };
-
-  let [flares, updateFlares] = useState([]);
 
   useEffect(() => {
     getFlares();
@@ -39,21 +40,22 @@ function Explore({ navigation, route }, props) {
     }
   }, [route.params.newFlare]);
 
-  const [rrTrigger, forceRR] = useState(0);
-
-  React.useEffect(() => {
+  useEffect(() => {
     const rr = navigation.addListener("focus", () => {
-      console.log(route.params);
       forceRR(route.params.trigg);
     });
 
     return rr;
   }, [navigation]);
 
+  const [flares, updateFlares] = useState([]);
+  const [rrTrigger, forceRR] = useState(0);
+  const [gotData, dataHere] = useState(false);
+
   return (
     <View>
       {/* {rrTrigger} */}
-      <FlareContainer flares={flares} />
+      <FlareContainer flares={flares} gotData={gotData} />
     </View>
   );
 }

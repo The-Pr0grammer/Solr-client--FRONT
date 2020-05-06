@@ -15,8 +15,8 @@ function Nav() {
   return (
     <Tab.Navigator
       labelStyle={{ fontSize: 170, top: 0 }}
-      shifting={false}
-      activeColor={"gold"}
+      shifting={true}
+      activeColor={"pink"}
       inactiveColor={"black"}
       tabBarIcon={{ focused: true, color: "blue" }}
       tabBarColor={"black"}
@@ -28,6 +28,8 @@ function Nav() {
         name="FlareForm"
         component={FlareForm}
         options={{
+          tabBarColor: "blue",
+
           forceTitlesDisplay: true,
           bottomTabs: {
             titleDisplayMode: "alwaysShow",
@@ -52,6 +54,7 @@ function Nav() {
         name="Explore"
         component={Explore}
         options={{
+          tabBarColor: "black",
           forceTitlesDisplay: true,
           bottomTabs: {
             titleDisplayMode: "alwaysShow",
@@ -77,6 +80,7 @@ function Nav() {
         name="Saved"
         component={Nav}
         options={{
+          tabBarColor: "green",
           forceTitlesDisplay: true,
           bottomTabs: {
             titleDisplayMode: "alwaysShow",

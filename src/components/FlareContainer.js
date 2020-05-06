@@ -53,20 +53,19 @@ export default class FlareContainer extends React.Component {
     console.log("gotData:", this.props.gotData);
     return (
       <View style={styles.animationContainer}>
-        {this.state.loading &&
-          !this.props.gotData && (
-            <View>
-              <Animation
-                ref={(animation) => (this.myAnimation = animation)}
-                style={{
-                  top: 77,
-                  width: 400,
-                  height: 400,
-                }}
-                source={require("../images/9696-world-flat-color.json")}
-              />
-            </View>
-          )}
+        {this.state.loading && !this.props.gotData && (
+          <View>
+            <Animation
+              ref={(animation) => (this.myAnimation = animation)}
+              style={{
+                top: 77,
+                width: 400,
+                height: 400,
+              }}
+              source={require("../images/9696-world-flat-color.json")}
+            />
+          </View>
+        )}
 
         <ScrollView>
           <View>{this.renderFlares(this.props)}</View>

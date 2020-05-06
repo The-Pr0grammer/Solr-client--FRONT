@@ -70,14 +70,7 @@ function Flare(props) {
   }
 
   return (
-    <ImageBackground
-      onPress={(props) => fireModal(props)}
-      source={{
-        uri:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSRefmgcmYYjpgU7O1BlKfFqBBrTlQTkr4dkc8yZuqZWBzCDHrK&usqp=CAU",
-      }}
-      style={styles.container}
-    >
+    <View onPress={(props) => fireModal(props)} style={styles.container}>
       <View style={styles.card}>
         <Modal isVisible={modView} statusBarTranslucent={false}>
           <View style={{ flex: 1 }}>
@@ -235,7 +228,7 @@ function Flare(props) {
           </TouchableOpacity>
         </View>
       </Card>
-    </ImageBackground>
+    </View>
   );
 }
 

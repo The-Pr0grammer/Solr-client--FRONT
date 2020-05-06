@@ -25,8 +25,6 @@ import {
   FormValidationMessage,
 } from "react-native-elements";
 import Loader from "./Loader.js";
-// import { set } from "react-native-reanimated";
-// import AnimatedLoader from "react-native-animated-loader";
 
 function FlareForm({ navigation }, props) {
   const shootFlare = async () => {
@@ -58,12 +56,9 @@ function FlareForm({ navigation }, props) {
       .then(function (res) {
         return res.json();
       })
-      .then(
-        (res) => navigation.navigate("Explore", { newFlare: res })
-        //
-      ) //change loading bool
+      .then((res) => navigation.navigate("Explore", { newFlare: res }))
       .catch(function (res) {
-        // console.log(res.json());
+        console.log(res.json());
       });
   };
 
@@ -78,104 +73,80 @@ function FlareForm({ navigation }, props) {
   const [loading, toggleLoading] = useState(false);
   const isFocused = useIsFocused();
   const [value, onChangeText] = React.useState(" ");
-  const [imgURL, onChangeImgURL] = React.useState("Enter a URL");
+  const [imgURL, onChangeImgURL] = React.useState(" ");
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
-    onChangeImgURL("Enter a URL");
+    onChangeImgURL(" ");
     setIsEnabled((previousState) => !previousState);
   };
 
   return (
     <View>
-      <Loader/>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
+      {loading && <Loader />}
+
+      <View
+        style={styles.centeredView}
+        onPress={() => console.log("clicked form")}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.flareTextPrompt}>
-              What do you want your flare to say?
+        <View style={styles.modalView}>
+          <Text style={styles.flareTextPrompt}>
+            What do you want your flare to say?
+          </Text>
+          <TextInput
+            placeholder={"What's on your mind?"}
+            placeholderTextColor="blue"
+            multiline
+            numberOfLines={5}
+            secureTextEntry={true}
+            onChangeText={(text) => onChangeText(text)}
+            value={value}
+            style={styles.flareText}
+            textAlign={"center"}
+            selectionColor={"magenta"}
+          />
+
+          <View style={{ justifyContent: "center", top: 60 }}>
+            <Text style={styles.flareImgPrompt}>
+              Do you want to include an image?
             </Text>
+            <Switch
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+              style={{ top: 146, left: 198 }}
+            />
+          </View>
+          {isEnabled && (
             <TextInput
-              multiline
-              numberOfLines={5}
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
-              style={styles.flareText}
+              placeholder="Enter a URL"
+              numberOfLines={1}
+              onChangeText={(imgURL) => onChangeImgURL(imgURL)}
+              value={imgURL}
+              style={styles.imgURL}
               textAlign={"center"}
               selectionColor={"magenta"}
             />
+          )}
 
-            <View style={{ justifyContent: "center", top: 60 }}>
-              <Text style={styles.flareImgPrompt}>
-                Do you want to include an image?
-              </Text>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-                style={{ top: 146, left: 198 }}
-              />
-            </View>
-            {isEnabled && (
-              <TextInput
-                numberOfLines={1}
-                onChangeText={(imgURL) => onChangeImgURL(imgURL)}
-                value={imgURL}
-                style={styles.imgURL}
-                textAlign={"center"}
-                selectionColor={"magenta"}
-              />
-            )}
+          <TouchableHighlight
+            underlayColor="chartreuse"
+            style={styles.shootButton}
+            onPress={shootFlare}
+          >
+            <Text style={styles.sButtonText}>Shoot Flare</Text>
+          </TouchableHighlight>
 
-            <TouchableHighlight
-              underlayColor="chartreuse"
-              style={styles.shootButton}
-              onPress={shootFlare}
-            >
-              <Text style={styles.sButtonText}>Shoot Flare</Text>
-            </TouchableHighlight>
-
-            <Icon
-              name="flare"
-              type="material-community"
-              color="orangered"
-              size={45}
-              top={253}
-            />
-
-            <TouchableHighlight
-              underlayColor="brown"
-              style={styles.cancelButton}
-              onPress={() => {
-                setModalVisible(false);
-                navigation.goBack();
-                onChangeText(" ");
-                setIsEnabled(false);
-                onChangeImgURL("Enter a URL");
-              }}
-            >
-              <View style={styles.cButtonDiv}>
-                <Text style={styles.cButtonText}>Cancel</Text>
-                <Icon
-                  name="close"
-                  type="material-community"
-                  color="crimson"
-                  size={45}
-                  top={3}
-                />
-              </View>
-            </TouchableHighlight>
-          </View>
+          <Icon
+            name="flare"
+            type="material-community"
+            color="orangered"
+            size={45}
+            top={253}
+          />
         </View>
-      </Modal>
+      </View>
     </View>
   );
 }
@@ -188,8 +159,6 @@ const styles = StyleSheet.create({
   },
   modalView: {
     height: 450,
-    top: 135,
-    // margin: 50,
     borderRadius: 50,
     padding: 5,
     justifyContent: "flex-end",
@@ -216,21 +185,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
-  cButtonText: {
-    top: 10,
-    textAlign: "center",
-    color: "tan",
-    fontSize: 18,
-  },
-  cancelButton: {
-    bottom: 440,
-    left: 145,
-    backgroundColor: "brown",
-    borderRadius: 80,
-    height: 70,
-    width: 70,
-    marginBottom: 20,
-  },
   shootButton: {
     top: 300,
     backgroundColor: "dodgerblue",
@@ -256,7 +210,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: 55,
     width: 350,
-    top: 450,
+    top: 540,
     borderColor: "gray",
     borderRadius: 26,
     backgroundColor: "orange",

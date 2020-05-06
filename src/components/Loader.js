@@ -26,11 +26,12 @@ export default class Loader extends React.Component {
             <Animation
               ref={(animation) => (this.myAnimation = animation)}
               style={{
+                top:60,
                 width: 400,
                 height: 400,
-                backgroundColor: "#eee",
+                
               }}
-              source={require("../images/lf20_PWO2cE.json")}
+              source={require("../images/8572-liquid-blobby-loader.json")}
             />
           </View>
         )}
@@ -42,6 +43,7 @@ export default class Loader extends React.Component {
 const styles = StyleSheet.create({
   animationContainer: {
     flex: 0,
+    backgroundColor: "dodgerblue",
     width: "100%",
     height: "100%",
     bottom: 2,

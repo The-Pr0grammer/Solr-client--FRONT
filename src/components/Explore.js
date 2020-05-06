@@ -40,15 +40,6 @@ function Explore({ navigation, route }, props) {
   }, [route.params.newFlare]);
 
   const [rrTrigger, forceRR] = useState(0);
-  // const isFocused = useIsFocused();
-  // const [, updateState] = React.useState();
-  // const forceUpdate = React.useCallback(() => updateState({}), []);
-
-  // {
-  //   isFocused && forceRR(!rrTrigger);
-  // }
-
-  // console.log(navigation);
 
   React.useEffect(() => {
     const rr = navigation.addListener("focus", () => {

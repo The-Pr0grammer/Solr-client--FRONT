@@ -1,5 +1,11 @@
 import * as React from "react";
-import { View, StyleSheet, Image, ImageBackground } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  TextInput,
+} from "react-native";
 import {
   Input,
   ThemeProvider,
@@ -24,10 +30,20 @@ function Login({ navigation }) {
           ></Image>
         </View>
         <View style={styles.inputView1}>
-          <Input placeholder="username" style={styles.input} />
+          <TextInput
+            textAlign
+            defaultValue="username"
+            clearTextOnFocus={true}
+            style={styles.input}
+          />
         </View>
         <View style={styles.inputView2}>
-          <Input placeholder="password" style={styles.input} />
+          <TextInput
+            textAlign
+            clearTextOnFocus={true}
+            defaultValue="password"
+            style={styles.input}
+          />
         </View>
         <View style={styles.loginBottom}></View>
 
@@ -66,7 +82,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "50%",
     borderRadius: 10,
-    backgroundColor: "gold",
+    // backgroundColor: "gold",
   },
   inputView2: {
     position: "absolute",
@@ -75,11 +91,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "50%",
     borderRadius: 10,
-    backgroundColor: "gold",
+    // backgroundColor: "gold",
   },
   input: {
-    backgroundColor: "#3f51b5",
-    color: "green",
+    top: 30,
+    height: 40,
+    fontSize: 26,
+    borderRadius: 10,
+    backgroundColor: "gold",
+    color: "purple",
   },
   loginBottom: {
     position: "absolute",

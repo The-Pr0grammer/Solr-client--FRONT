@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   FlatList,
   SafeAreaView,
+  TextInput,
 } from "react-native";
 import {
   Input,
@@ -22,6 +23,24 @@ import Modal from "react-native-modal";
 import Constants from "expo-constants";
 
 function Flare(props) {
+  const fPostResponse = () => {
+    console.log(props.flare["relationships"]);
+    fetch(`http://0.0.0.0:3000/flares/${props.flare.id}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "PATCH",
+      body: JSON.stringify({
+        relationships: { responses: { data: [...props.flare.relationships.responses.data, response] } },
+      }),
+    })
+      .then((resp) => onResponseChange(" "))
+      .catch(function (res) {
+        console.log(res);
+      });
+  };
+
   const fpostGlasses = () => {
     fetch(`http://0.0.0.0:3000/flares/${props.flare.id}`, {
       headers: {
@@ -35,9 +54,11 @@ function Flare(props) {
     });
   };
 
-  let [glasses, glassesIncr] = useState(props.flare["😎"]);
-  let [interacts, interactsIncr] = useState(props.flare.interacts);
-  let [modView, modViewToggle] = useState(false);
+  const [glasses, glassesIncr] = useState(props.flare["😎"]);
+  const [interacts, interactsIncr] = useState(props.flare.interacts);
+  const [modView, modViewToggle] = useState(false);
+  const [response, onResponseChange] = useState(" ");
+  const [responseInputVis, responseInputToggle] = useState(false);
 
   useEffect(() => {
     fpostGlasses();
@@ -93,19 +114,86 @@ function Flare(props) {
                 ></Image>
               </View>
             )}
-
-            <Text
-              h3
+            <View
               style={{
-                top: 38,
-                color: "gold",
+                flexDirection: "row",
                 justifyContent: "center",
-                textAlign: "center",
+                width: "100%",
               }}
             >
-              {props.flare.content}
-            </Text>
+              <Text
+                h3
+                style={{
+                  top: 38,
+                  color: "gold",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
+              >
+                {props.flare.content}
+              </Text>
+            </View>
             <SafeAreaView style={styles.respDiv}>
+              <TouchableOpacity
+                onPress={() => {
+                  responseInputToggle(!responseInputVis);
+                  // interactsIncr(interacts + 1);
+                }}
+                style={{
+                  // flexDirection: "row",
+                  width: 55,
+                  left: 155,
+                  // bottom: 15,
+                  borderRadius: 25,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Icon
+                  name="comment-plus"
+                  type="material-community"
+                  color="orange"
+                  size={57}
+                />
+              </TouchableOpacity>
+              {responseInputVis && (
+                <View>
+                  <Button
+                    title="Add Response"
+                    titleStyle={{ fontColor: "navy" }}
+                    linearGradientProps={{
+                      colors: ["blue", "magenta"],
+                      start: { x: 0, y: 0.5 },
+                      end: { x: 1, y: 0.5 },
+                    }}
+                    onPress={() => {
+                      fPostResponse();
+                      responseInputToggle(!responseInputVis);
+                      // interactsIncr(interacts + 1);
+                    }}
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                      height: 55,
+                      top: 143,
+                      left: 85,
+                      width: 165,
+                      borderRadius: 25,
+                    }}
+                  ></Button>
+                  <TextInput
+                    defaultValue={"Write a response :)"}
+                    multiline
+                    numberOfLines={5}
+                    // secureTextEntry={true}
+                    onChangeText={(text) => onResponseChange(text)}
+                    value={response}
+                    style={styles.newResponseBox}
+                    textAlign={"center"}
+                    selectionColor={"magenta"}
+                  />
+                </View>
+              )}
               <FlatList
                 data={props.flare.responses}
                 renderItem={({ item }) => <Response title={item} />}
@@ -289,9 +377,9 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   respDiv: {
+    flex:1,
     marginTop: Constants.statusBarHeight,
-    top: 5,
-    height: "40%",
+    height: "50%",
   },
   item: {
     backgroundColor: "aqua",
@@ -360,5 +448,14 @@ const styles = StyleSheet.create({
     height: 0,
     flexDirection: "row",
     justifyContent: "flex-start",
+  },
+  newResponseBox: {
+    bottom: 66,
+    // flex: 1,
+    height: 150,
+    fontSize: 26,
+    width: "100%",
+    backgroundColor: "gold",
+    borderRadius: 20,
   },
 });

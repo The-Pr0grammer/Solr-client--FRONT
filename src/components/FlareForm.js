@@ -14,7 +14,6 @@ import {
   Switch,
 } from "react-native";
 import {
-  Input,
   ThemeProvider,
   Button,
   Icon,
@@ -66,6 +65,8 @@ function FlareForm({ navigation }, props) {
     const rr = navigation.addListener("focus", () => {
       setModalVisible(true);
       toggleLoading(false);
+      onChangeText(undefined);
+      onChangeImgURL(undefined);
     });
   });
 
@@ -76,33 +77,33 @@ function FlareForm({ navigation }, props) {
   const [imgURL, onChangeImgURL] = React.useState(" ");
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
-    onChangeImgURL(" ");
+    // onChangeImgURL(" ");
     setIsEnabled((previousState) => !previousState);
   };
 
   return (
     <View>
       {loading && <Loader />}
-
-      <View
-        style={styles.centeredView}
-        onPress={() => console.log("clicked form")}
-      >
+      <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.flareTextPrompt}>
             What do you want your flare to say?
           </Text>
           <TextInput
-            placeholder={"What's on your mind?"}
-            placeholderTextColor="blue"
+            defaultValue="Hello World?"
             multiline
             numberOfLines={5}
-            secureTextEntry={true}
             onChangeText={(text) => onChangeText(text)}
             value={value}
             style={styles.flareText}
             textAlign={"center"}
             selectionColor={"magenta"}
+            onFocus={() => {
+              !value && onChangeText(" ");
+            }}
+            onBlur={() => {
+              value === " " && onChangeText(undefined);
+            }}
           />
 
           <View style={{ justifyContent: "center", top: 60 }}>
@@ -120,13 +121,19 @@ function FlareForm({ navigation }, props) {
           </View>
           {isEnabled && (
             <TextInput
-              placeholder="Enter a URL"
+              defaultValue="Enter a URL"
               numberOfLines={1}
               onChangeText={(imgURL) => onChangeImgURL(imgURL)}
               value={imgURL}
               style={styles.imgURL}
               textAlign={"center"}
               selectionColor={"magenta"}
+              onFocus={() => {
+                !imgURL && onChangeImgURL(" ");
+              }}
+              onBlur={() => {
+                imgURL === " " && onChangeImgURL(undefined);
+              }}
             />
           )}
 

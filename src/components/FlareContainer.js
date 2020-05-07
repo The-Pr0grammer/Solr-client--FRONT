@@ -49,8 +49,6 @@ export default class FlareContainer extends React.Component {
   }
 
   render() {
-    console.log("loading:", this.state.loading);
-    console.log("gotData:", this.props.gotData);
     return (
       <View style={styles.animationContainer}>
         {this.state.loading && !this.props.gotData && (
